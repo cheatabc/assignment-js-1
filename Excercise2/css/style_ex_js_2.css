@@ -1,0 +1,20 @@
+.wrapper {
+    max-width: 50rem;
+    border: 1px solid #eee;
+    padding: 20px;
+    margin: 20px auto 50px;
+}
+
+.title {
+    color: #455af7;
+}
+
+.select-location option {
+    text-align-last: center;
+}
+
+.btn-reset {
+    bottom: 0;
+    width: 300px;
+}
+
