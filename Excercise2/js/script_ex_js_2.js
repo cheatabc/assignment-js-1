@@ -9,12 +9,10 @@ window.addEventListener("load", function() {
         for (let index = 0; index < listLocation.length; index++) {
             listLocation[index].className = "list-group-item";
         }
-        if (selected === "reset") {
-            selectLocation.selectedIndex = "0";
+        if (selected === "reset" || selected === "Select location") {
+            return selectLocation.selectedIndex = "0";
         }
-        if (selected === "Select location" || selected === "reset") {
-            listLocation[index].className = "list-group-item";
-        }
+
         for (let index = 0; index < listLocation.length; index++) {
             if (selected === "even") {
                 if (index % 2 != 0) {
