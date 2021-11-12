@@ -6,25 +6,29 @@ window.addEventListener("load", function() {
     selectLocation.addEventListener("change", function(e) {
         let selected = this.value;
         // clear active class
-        listLocation.forEach((location) => {
-            location.className = "list-group-item";
-        });
+        for (let index = 0; index < listLocation.length; index++) {
+            listLocation[index].className = "list-group-item";
+        }
+        if (selected === "reset") {
+            selectLocation.selectedIndex = "0";
+        }
+        if (selected === "Select location" || selected === "reset") {
+            listLocation[index].className = "list-group-item";
+        }
         for (let index = 0; index < listLocation.length; index++) {
             if (selected === "even") {
-                if (index % 2 !== 0) {
-                    listLocation[index].className += " active";
+                if (index % 2 != 0) {
+                    listLocation[index].classList.add("active");
                 }
-            } else if (selected === "odd") {
+            }
+            if (selected === "odd") {
                 if (index % 2 == 0) {
-                    listLocation[index].className += " active";
+                    listLocation[index].classList.add("active");
                 }
-            } else if (selected === "Select location" || selected === "reset") {
-                listLocation[index].className = "list-group-item";
-            } else {
-                listLocation[selected - 1].className += " active";
-                return;
+            }
+            if (selected === (index + 1).toString()) {
+                listLocation[selected - 1].classList.add("active");
             }
         }
     });
 });
-
