@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="POItablediv">
+        <table id="POITable" border="1">
+            <tr>
+                <th><input type="checkbox" name="select_all" id="select_all"></th>
+                <th style="width: 200px;">Name</th>
+                <th style="width: 200px;">Phone</td>
+                    <th style="width: 200px;">Birthday</th>
+                    <th>Delete?</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="name[]" class="" id="1"></td>
+                <td>
+                    Test
+                </td>
+                <td>
+                    090909090
+                </td>
+                <td>
+                    02-04-1999
+                </td>
+                <td><input type="button" class="delPOIbutton" value="Delete" onclick="deleteOneRow(this)" /></td>
+            </tr>
+        </table>
+        <br><br>
+        <input type="button" id="addRow" value="Add" onclick="insRow()" />
+        <input type="button" id="DeleteSelectedRow" onclick="deleteRows()" value="Delete" />
+        <script src="./js/script.js"></script>
+
+</body>
+
+</html>
