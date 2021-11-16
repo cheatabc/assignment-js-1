@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossOrigin="anonymous" />
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossOrigin="anonymous" />
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <section class="msger frame-1">
+                    <header class="msger-header">
+                        <div class="msger-header-title">
+                            <img class="avatar-head" src="./images/num1.png" alt=""> Võ Đình Duy
+                        </div>
+                        <div class="msger-header-options">
+                            <span><i class="fas fa-cog"></i></span>
+                        </div>
+                    </header>
+
+                    <main class="msger-chat"></main>
+
+                    <div class="list-btn">
+                        <button class="btn btn-bold">Đậm</button>
+                        <button class="btn btn-italic">Nghiêng</button>
+                        <button class="btn btn-reset">Reset</button>
+                    </div>
+                    <form class="msger-inputarea">
+                        <div class="msger-input" contenteditable="true">
+                        </div>
+                        <button type="submit" class="msger-send-btn">Send</button>
+                    </form>
+                </section>
+            </div>
+
+            <!-- client 2 -->
+            <div class="col-sm-6">
+                <section class="msger frame-2">
+                    <header class="msger-header">
+                        <div class="msger-header-title">
+                            <img class="avatar-head" src="./images/num2.png" alt=""></i>binhna
+                        </div>
+                        <div class="msger-header-options">
+                            <span><i class="fas fa-cog"></i></span>
+                        </div>
+                    </header>
+
+                    <main class="msger-chat">
+                    </main>
+                    <div class="list-btn">
+                        <button class="btn btn-bold">Đậm</button>
+                        <button class="btn btn-italic">Nghiêng</button>
+                        <button class="btn btn-reset">Reset</button>
+                    </div>
+                    <form class="msger-inputarea">
+                        <!-- <input type="text" class="msger-input" placeholder=""> -->
+                        <div class="msger-input" contenteditable="true">
+                        </div>
+                        <button type="submit" class="msger-send-btn">Send</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
