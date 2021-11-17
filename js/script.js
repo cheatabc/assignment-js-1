@@ -3,7 +3,6 @@ const inputEmail = document.getElementById("inputEmail");
 const inputPhone = document.getElementById("inputPhone");
 const inputBirthday = document.getElementById("inputBirthday");
 const inputPassword = document.getElementById("inputPassword");
-const inputConfirmPassword = document.getElementById("inputConfirmPassword");
 const btnSubmit = document.querySelector(".btn-submit");
 const btnReset = document.querySelector(".btn-reset");
 const btnUpload = document.querySelector("#btn-upload");
@@ -16,9 +15,6 @@ const resultFullName = document.querySelector(".fullname");
 const resultEmail = document.querySelector(".email");
 const resultPhone = document.querySelector(".phone");
 const resultBirthday = document.querySelector(".birthday");
-
-
-
 
 (function() {
     document.querySelector("html").addEventListener("keydown", function(e) {
@@ -82,17 +78,7 @@ inputBirthday.addEventListener("input", function() {
 });
 
 inputPassword.addEventListener("input", function() {
-    const MIN_PASSWORD_LENGTH = 8;
-    const MAX_PASSWORD_LENGTH = 30;
-    const regexStartWithLetter = /^[a-zA-Z]{1}/;
-    const regexContainSpecialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-    const regexContainNumbers = /[\d]/;
-    const regexContainUpperWord = /[A-Z]/;
-    checkLength(inputPassword, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
-    checkPassWord(inputPassword, regexContainSpecialCharacters, "Password must contain special characters - Suggest password : A@123456");
-    checkPassWord(inputPassword, regexContainNumbers, "Password must contain number characters - Suggest password : A@123456");
-    checkPassWord(inputPassword, regexContainUpperWord, "Password must contain uppercase characters - Suggest password : A@123456");
-    checkPassWord(inputPassword, regexStartWithLetter, "Password must start with letter - Suggest password : A@123456");
+    checkCommonPassword(inputPassword);
 });
 
 // validate confirm password
@@ -219,6 +205,20 @@ function checkLength(selector, minLength, maxLength) {
     }
 }
 
+function checkCommonPassword(passwordSelector) {
+    const MIN_PASSWORD_LENGTH = 8;
+    const MAX_PASSWORD_LENGTH = 30;
+    const regexStartWithLetter = /^[a-zA-Z]{1}/;
+    const regexContainSpecialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    const regexContainNumbers = /[\d]/;
+    const regexContainUpperWord = /[A-Z]/;
+    checkLength(passwordSelector, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
+    checkPassWord(passwordSelector, regexContainSpecialCharacters, "Password must contain special characters - Suggest password : A@123456");
+    checkPassWord(passwordSelector, regexContainNumbers, "Password must contain number characters - Suggest password : A@123456");
+    checkPassWord(passwordSelector, regexContainUpperWord, "Password must contain uppercase characters - Suggest password : A@123456");
+    checkPassWord(passwordSelector, regexStartWithLetter, "Password must start with letter - Suggest password : A@123456");
+}
+
 function submitForm(e) {
     e.preventDefault();
     checkNullField(inputFullName, "Full name");
@@ -226,7 +226,6 @@ function submitForm(e) {
     checkNullField(inputPhone, "Phone");
     checkNullField(inputBirthday, "Birthday");
     checkNullField(inputPassword, "Password");
-    checkNullField(inputConfirmPassword, "Confirm password");
 
     const listInvalid = document.querySelectorAll("input.is-invalid");
     if (listInvalid.length) return;
