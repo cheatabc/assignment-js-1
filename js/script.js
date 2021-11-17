@@ -17,10 +17,8 @@ const resultEmail = document.querySelector(".email");
 const resultPhone = document.querySelector(".phone");
 const resultBirthday = document.querySelector(".birthday");
 
-const regexEmail =
-    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const regexPhone = /^[0][0-9]{9}/;
-const regexBirthday = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
+
+
 
 (function() {
     document.querySelector("html").addEventListener("keydown", function(e) {
@@ -43,22 +41,25 @@ inputFullName.addEventListener("change", function() {
     if (inputFullName.value) {
         inputFullName.value = titleCase(inputFullName.value);
     }
-
 });
 
 inputEmail.addEventListener("input", function() {
+    const regexEmail =
+        /^(([^<>()[\]\\.,;:\s@#\"]+(\.[^<>()[\]\\.,;:#\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const MAX_EMAIL_LENGTH = 320;
     checkRequiredLength(inputEmail, "Email", MAX_EMAIL_LENGTH);
     fieldInputValidation(inputEmail, regexEmail, "Email is invalid");
 });
 
 inputPhone.addEventListener("input", function() {
+    const regexPhone = /^[0][0-9]{9}/;
     const MAX_PHONE_LENGTH = 10;
     checkRequiredLength(inputPhone, "Phone", MAX_PHONE_LENGTH);
     fieldInputValidation(inputPhone, regexPhone, `Must start with 0`);
 });
 
 inputBirthday.addEventListener("input", function() {
+    const regexBirthday = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
     const MAX_BIRTHDAY_LENGTH = 10;
     const inputDateSplit = this.value.split("-").reverse();
     const today = new Date();
@@ -67,12 +68,7 @@ inputBirthday.addEventListener("input", function() {
     const yyyy = today.getFullYear();
     const currentDate = new Date(yyyy, mm, dd).getTime();
     const inputDate = new Date(inputDateSplit[0], inputDateSplit[1], inputDateSplit[2]).getTime();
-    if (this.value.length == 2) {
-        this.value += "-";
-    }
-    if (this.value.length == 5) {
-        this.value += "-";
-    }
+
     if (this.value.length == 8 && !isNaN(this.value)) {
         this.value = this.value.substr(0, 2) +
             "-" + this.value.substr(2, 2) +
@@ -89,39 +85,14 @@ inputPassword.addEventListener("input", function() {
     const MIN_PASSWORD_LENGTH = 8;
     const MAX_PASSWORD_LENGTH = 30;
     const regexStartWithLetter = /^[a-zA-Z]{1}/;
-    const regexContainSpecialCharacters = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    const regexContainSpecialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
     const regexContainNumbers = /[\d]/;
     const regexContainUpperWord = /[A-Z]/;
-    if (
-        checkLength(inputPassword, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH)
-    ) {
-        if (checkPassWord(inputPassword, regexStartWithLetter)) {
-            return toggleClassValidation(inputPassword,
-                "Password must start with letter - Suggest password : A@123456");
-        } else {
-            toggleClassValidation(inputPassword);
-        }
-        if (checkPassWord(inputPassword, regexContainSpecialCharacters)) {
-            return toggleClassValidation(inputPassword,
-                "Password must contain special characters - Suggest password : A@123456");
-        } else {
-            toggleClassValidation(inputPassword);
-        }
-        if (checkPassWord(inputPassword, regexContainNumbers)) {
-            return toggleClassValidation(inputPassword,
-                "Password must contain number characters - Suggest password : A@123456");
-        } else {
-            toggleClassValidation(inputPassword);
-        }
-        if (checkPassWord(inputPassword, regexContainUpperWord)) {
-            return toggleClassValidation(inputPassword,
-                "Password must contain uppercase characters - Suggest password : A@123456");
-        } else {
-            toggleClassValidation(inputPassword);
-        }
-    } else {
-        toggleClassValidation(inputPassword, "Password length 8 - 30 characters");
-    }
+    checkLength(inputPassword, MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH);
+    checkPassWord(inputPassword, regexContainSpecialCharacters, "Password must contain special characters - Suggest password : A@123456");
+    checkPassWord(inputPassword, regexContainNumbers, "Password must contain number characters - Suggest password : A@123456");
+    checkPassWord(inputPassword, regexContainUpperWord, "Password must contain uppercase characters - Suggest password : A@123456");
+    checkPassWord(inputPassword, regexStartWithLetter, "Password must start with letter - Suggest password : A@123456");
 });
 
 // validate confirm password
@@ -137,10 +108,7 @@ inputConfirmPassword.addEventListener("input", function() {
 btnUpload.addEventListener("change", function() {
     const [file] = btnUpload.files;
     const arrayMiME = ["image/jpeg", "image/png", "image/jpg"];
-    if (
-        file &&
-        arrayMiME.includes(file.type)
-    ) {
+    if (file && arrayMiME.includes(file.type)) {
         avatarUpload.style.display = "block";
         avatarUpload.src = URL.createObjectURL(file);
         iconUploadAvatar.style.display = "none";
@@ -205,11 +173,9 @@ function fieldInputValidation(selector, regex, msgErr = "") {
     }
 }
 // check password
-function checkPassWord(selector, regex) {
+function checkPassWord(selector, regex, msgErr = "") {
     if (!regex.test(selector.value.trim())) {
-        return true;
-    } else {
-        return false;
+        return toggleClassValidation(selector, msgErr);
     }
 }
 // uppercase each first letters
@@ -242,8 +208,15 @@ function removeAscent(str) {
 }
 
 function checkLength(selector, minLength, maxLength) {
-    return selector.value.trim().length >= minLength &&
-        selector.value.trim().length <= maxLength;
+    if (selector.value.trim().length < minLength ||
+        selector.value.trim().length > maxLength) {
+        return toggleClassValidation(
+            selector,
+            "Password length 8 - 30 characters"
+        );
+    } else {
+        return toggleClassValidation(selector);
+    }
 }
 
 function submitForm(e) {
