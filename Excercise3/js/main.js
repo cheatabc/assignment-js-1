@@ -1,12 +1,12 @@
 window.addEventListener("load", function() {
     const formFrame1 = get(".frame-1 .msger-inputarea");
     const formFrame2 = get(".frame-2 .msger-inputarea");
-    const msgInput1 = get(".frame-1 .msger-input");
-    const msgInput2 = get(".frame-2 .msger-input");
-    const msgerChat1 = get(".frame-1 .msger-chat");
-    const msgerChat2 = get(".frame-2 .msger-chat");
-    const buttonsResetFrame1 = get(".frame-1 .btn-reset");
-    const buttonsResetFrame2 = get(".frame-2 .btn-reset");
+    const msgInput1 = document.querySelector(".frame-1 .msger-input");
+    const msgInput2 = document.querySelector(".frame-2 .msger-input");
+    const msgerChat1 = document.querySelector(".frame-1 .msger-chat");
+    const msgerChat2 = document.querySelector(".frame-2 .msger-chat");
+    const buttonsResetFrame1 = document.querySelector(".frame-1 .btn-reset");
+    const buttonsResetFrame2 = document.querySelector(".frame-2 .btn-reset");
     const buttonBold1 = document.querySelector('.frame-1 .btn-bold');
     const buttonItalic1 = document.querySelector('.frame-1 .btn-italic');
     const buttonBold2 = document.querySelector('.frame-2 .btn-bold');
@@ -26,27 +26,22 @@ window.addEventListener("load", function() {
         cleanValueScroll(msgInput2);
     })();
 
-    boldMessage(buttonBold1, "bold", msgInput1);
-    boldMessage(buttonBold2, "bold", msgInput2);
-    italicMessage(buttonItalic1, "italic", msgInput1);
-    italicMessage(buttonItalic2, "italic", msgInput2);
+    fontStyleMessage(buttonBold1, msgInput1, 'bold');
+    fontStyleMessage(buttonBold2, msgInput2, 'bold');
+    fontStyleMessage(buttonItalic1, msgInput1, 'italic');
+    fontStyleMessage(buttonItalic2, msgInput2, 'italic');
     resetStyle(buttonsResetFrame1, msgInput1);
     resetStyle(buttonsResetFrame2, msgInput2);
-
-    function boldMessage(selector, fontWeightTxt, message) {
+    // Add bold, italic style to text
+    function fontStyleMessage(selector, message, fontStyle) {
         selector.addEventListener("click", function() {
-            if (message.innerHTML) {
-                message.style.fontWeight = fontWeightTxt;
-                message.setAttribute('data-status-fw', "bold");
-            }
-        });
-    }
-
-    function italicMessage(selector, fontStyleTxt, message) {
-        selector.addEventListener("click", function() {
-            if (message.innerHTML) {
-                message.style.fontStyle = fontStyleTxt;
-                message.setAttribute('data-status-fs', "italic");
+            message.focus();
+            document.execCommand(fontStyle, false, null);
+            selector.classList.toggle("active");
+            if (selector.classList.contains("active")) {
+                selector.style.border = "3px cyan solid";
+            } else {
+                selector.style.border = "0px";
             }
         });
     }
@@ -54,40 +49,20 @@ window.addEventListener("load", function() {
     function resetStyle(selector, message) {
         selector.addEventListener("click", function() {
             if (message.innerHTML) {
-                message.setAttribute('data-status', "0");
-                removeStatus(message, ["data-status-fw", "data-status-fs"]);
+                message.innerHTML = "";
             }
         });
     }
 
-    function removeStatus(element, atrribute) {
-        for (let index = 0; index < atrribute.length; index++) {
-            element.removeAttribute(atrribute[index]);
-        }
-        element.style.fontWeight = "";
-        element.style.fontStyle = "";
-    }
     // form Frame Submit
     function formFrameSubmit(event, personSend, msgInput) {
         event.preventDefault();
         let msgContent = msgInput.innerHTML;
-        if (msgInput.dataset.statusFw == "bold" && msgInput.dataset.statusFs == "italic") {
-            msgInput.innerHTML = `<b>${msgContent}</b>`;
-            // console.log(111);
+        if (msgContent) {
+            getContentMsgItem(personSend, msgContent);
+            cleanValueScroll(msgInput);
         }
-        if (!msgContent) return;
-        if (msgInput.dataset.statusFw == "bold") {
-            msgContent = `<b>${msgInput.innerHTML}</b>`;
-        }
-        if (msgInput.dataset.statusFs == "italic") {
-            msgContent = `<i>${msgInput.innerHTML}</i>`;
-        }
-        if (msgInput.dataset.status == "0") {
-            removeStatus(msgInput, ["data-status-fw", "data-status-fs"]);
-            msgInput.innerHTML;
-        }
-        getContentMsgItem(personSend, msgContent);
-        cleanValueScroll(msgInput);
+
     }
 
     // frame 1 chat
