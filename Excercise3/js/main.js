@@ -14,7 +14,8 @@ window.addEventListener("load", function() {
     const avatarPr1 = "./images/num1.png";
     const avatarPr2 = "./images/num2.png";
     let contentMsg = JSON.parse(localStorage.getItem("contentMsg"));
-
+    buttonsResetFrame1.classList.add("reset-left");
+    buttonsResetFrame2.classList.add("reset-right");
     // get storage contentMsg binding
     (function() {
         if (contentMsg) {
@@ -48,6 +49,22 @@ window.addEventListener("load", function() {
 
     function resetStyle(selector, message) {
         selector.addEventListener("click", function() {
+            if (selector.classList.contains("reset-left")) {
+                if (buttonBold1.classList.contains("active")) {
+                    buttonBold1.style.border = "0px";
+                }
+                if (buttonItalic1.classList.contains("active")) {
+                    buttonItalic1.style.border = "0px";
+                }
+            }
+            if (selector.classList.contains("reset-right")) {
+                if (buttonBold2.classList.contains("active")) {
+                    buttonBold2.style.border = "0px";
+                }
+                if (buttonItalic2.classList.contains("active")) {
+                    buttonItalic2.style.border = "0px";
+                }
+            }
             if (message.innerHTML) {
                 message.innerHTML = "";
             }
@@ -61,8 +78,9 @@ window.addEventListener("load", function() {
         if (msgContent) {
             getContentMsgItem(personSend, msgContent);
             cleanValueScroll(msgInput);
+        } else {
+            alert("No input");
         }
-
     }
 
     // frame 1 chat
