@@ -55,9 +55,15 @@ inputPhone.addEventListener("input", function() {
 });
 
 inputBirthday.addEventListener("input", function() {
-    const regexBirthday = /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
+    const regexBirthday = /^(0[1-9]|[12][0-9]|3[01])[ / ](0[1-9]|1[012])[ / ](19|20)\d\d$/;
     const MAX_BIRTHDAY_LENGTH = 10;
-    const inputDateSplit = this.value.split("-").reverse();
+
+    if (this.value.trim().length == 8 && !isNaN(this.value)) {
+        this.value = this.value.substr(0, 2) +
+            "/" + this.value.substr(2, 2) +
+            "/" + this.value.substr(4, 4);
+    }
+    const inputDateSplit = this.value.split("/").reverse();
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -65,11 +71,6 @@ inputBirthday.addEventListener("input", function() {
     const currentDate = new Date(yyyy, mm, dd).getTime();
     const inputDate = new Date(inputDateSplit[0], inputDateSplit[1], inputDateSplit[2]).getTime();
 
-    if (this.value.length == 8 && !isNaN(this.value)) {
-        this.value = this.value.substr(0, 2) +
-            "-" + this.value.substr(2, 2) +
-            "-" + this.value.substr(4, 4);
-    }
     checkRequiredLength(inputBirthday, "Birthday", MAX_BIRTHDAY_LENGTH);
     fieldInputValidation(inputBirthday, regexBirthday, 'Invalid Birthday');
 
